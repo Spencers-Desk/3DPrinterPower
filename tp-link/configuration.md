@@ -79,4 +79,56 @@ bound_services:
 # printer.cfg
 Add the below to your printer.cfg file. If you have a macros.cfg file, you can move the macros in there. Make sure that the idle_timeout stays in the printer.cfg file.
 ```
+##################################################
+#     Power Macros
+##################################################
+# Description: This section has a macro that calls moonraker to toggle our relay, a macro for delayed gcode, and a macro to call the delayed gcode when our printer enters the state "idle"
+
+[gcode_macro POWER_OFF_PRINTER]
+# Description: This macro asks moonraker to toggle our "relay" state to "off"
+gcode:
+  {action_call_remote_method(
+    "set_device_power", device="relay", state="off"
+  )}
+# Comments:
+# action_call_remote_method is used to call a method registered by a remote client (moonraker)
+# "set_device_power" is the method we want to call from the moonraker.cfg
+# "device" is the name of the deivce defined in moonraker.cfg
+# "state" is the state of the relay, on, off, or toggle
+
+  
+[delayed_gcode delayed_printer_off]
+# Description: This macro calls the "POWER_OFF_PRINTER" macro once the "printer" object is in state "idle"
+initial_duration: 0.
+gcode:
+  {% if printer.idle_timeout.state == "Idle" %}
+    POWER_OFF_PRINTER
+  {% endif %}
+# Comments:
+# "delayed_gcode" is a way to execute gcode after a set delay
+# "initial_duration"
+#   The duration of the initial delay (in seconds). If set to a
+#   non-zero value the delayed_gcode will execute the specified number
+#   of seconds after the printer enters the "ready" state. This can be
+#   useful for initialization procedures or a repeating delayed_gcode.
+#   If set to 0 the delayed_gcode will not execute on startup.
+#   Default is 0.
+# "POWER_OFF_PRINTER" calls the "POWER_OFF_PRINTER" macro defined above
+
+
+[idle_timeout]
+# Description: This macro is called when the printer goes into an idle state and calls the previous delayed_gcode. It updates the delay to the duration defined below.
+# After 10 minutes (600seconds) of being idle, the gcode below will be called.
+gcode:
+  M84
+  TURN_OFF_HEATERS
+  UPDATE_DELAYED_GCODE ID=delayed_printer_off DURATION=600
+# Comments:
+# "idle_timeout" is a module that tracks the "state" of the printer. The "state" can be "Idle", "Printing", or "Ready"
+# "M84" turns off the stepper motors
+# "TURN_OFF_HEATERS" turns of the heaters
+# "UPDATE_DELAYED_GCODE"
+#   UPDATE_DELAYED_GCODE [ID=<name>] [DURATION=<seconds>]:
+#   Updates the delay duration for the identified [delayed_gcode] and starts the timer for gcode execution.
+#   A value of 0 will cancel a pending delayed gcode from executing.
 ```
