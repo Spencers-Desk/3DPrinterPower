@@ -129,3 +129,8 @@ gcode:
 #   Updates the delay duration for the identified [delayed_gcode] and starts the timer for gcode execution.
 #   A value of 0 will cancel a pending delayed gcode from executing.
 ```
+# end gcode
+Add the below line to your end gcode in your slicer. This will call the delayed gcode function when your printer finishes. You could also add it to your "end_print" macro if you have one. I added it to my slicer so that I could change between the options without messing with my config files.
+```
+delayed_printer_off
+```
