@@ -13,10 +13,7 @@ type: tplink_smartplug
 #   tplink_smartplug, tasmota, shelly, homeseer, homeassistant, loxonev1,
 #   smartthings, mqtt or hue.
 #   This parameter must be provided.
-pin: gpiochip0/gpio23
-initial_state: on
-#    The state the power device should be initialized to.  May be on or
-#    off.  When this option is not specifed no initial state will be set.
+address: 192.168.1.123
 off_when_shutdown: False
 #   If set to True the device will be powered off when Klipper enters
 #   the "shutdown" state.  This option applies to all device types.
