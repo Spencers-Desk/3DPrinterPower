@@ -17,4 +17,4 @@ This feature is a little confusing. I'm not quite sure what the purpose of it is
 
 
 ## Block Diagram
-![block_diagram](./Relay V1.2/block_diagram.png)
+![block_diagram](block_diagram.png)
