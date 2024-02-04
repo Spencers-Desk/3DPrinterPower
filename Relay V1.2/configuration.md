@@ -56,7 +56,7 @@ restart_klipper_when_powered: True
 restart_delay: 1.
 #   If "restart_klipper_when_powered" is set, this option specifies the amount
 #   of time (in seconds) to delay the restart.  Default is 1 second.
-bound_services:
+bound_services: klipper
 #   A newline separated list of services that are "bound" to the state of this
 #   device.  When the device is powered on all bound services will be started.
 #   When the device is powered off all bound services are stopped.
