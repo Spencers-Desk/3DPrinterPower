@@ -1,1 +1,2 @@
 # tp-link Energy Monitoring Smart Plug
+This smart plug is an alternative to the Relay V1.2. It doesn't require any special tools, working with main voltage, and has less configration than the Relay does. You can grab a pack of 4 off of Amazon for about $40 if you want the kind that can monitor energy or $20-$30 if you don't want to monitor energy. They're rated up to 15A, can be voice controlled, and controlled by moonraker.
