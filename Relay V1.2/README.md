@@ -18,3 +18,6 @@ This feature is a little confusing. I'm not quite sure what the purpose of it is
 
 ## Block Diagram
 ![block_diagram](block_diagram.png)
+
+## Wiring Diagram
+![wiring_diagram](wiring_diagram.png)
