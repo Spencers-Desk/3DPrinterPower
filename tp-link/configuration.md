@@ -7,8 +7,8 @@ Add the below to your moonraker.cfg file. Make sure to add the IP of your tp-lin
 ##################################################
 #     Power
 ##################################################
-[power relay]
-type: gpio
+[power smart_plug]
+type: tplink_smartplug
 #   The type of device.  Can be either gpio, klipper_device, rf,
 #   tplink_smartplug, tasmota, shelly, homeseer, homeassistant, loxonev1,
 #   smartthings, mqtt or hue.
@@ -45,7 +45,7 @@ restart_klipper_when_powered: True
 restart_delay: 1.
 #   If "restart_klipper_when_powered" is set, this option specifies the amount
 #   of time (in seconds) to delay the restart.  Default is 1 second.
-bound_services:
+bound_services: klipper
 #   A newline separated list of services that are "bound" to the state of this
 #   device.  When the device is powered on all bound services will be started.
 #   When the device is powered off all bound services are stopped.
