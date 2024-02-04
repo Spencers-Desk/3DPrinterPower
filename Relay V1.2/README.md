@@ -21,3 +21,6 @@ This feature is a little confusing. I'm not quite sure what the purpose of it is
 
 ## Wiring Diagram
 ![wiring_diagram](wiring_diagram.png)
+
+## Case
+I put together a case for the relay. Below is a link to printables.com. Included is the base, lid, and .STEP file so that you can adjust the heat insert holes or modify the design to your liking.
