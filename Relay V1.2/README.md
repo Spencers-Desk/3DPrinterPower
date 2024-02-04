@@ -14,3 +14,7 @@ This feature allows you to set the relay to an "off" state, meaning it will not 
 
 ### Power Outage Detection
 This feature is a little confusing. I'm not quite sure what the purpose of it is. If there was a power outage, power to the relay would be cut off, while the capacitors in the PSU would still power the motherboard for a few seconds. So, it's strange. It could be that the relay is the one signalling the motherboard instead. If this is the case, I imagine the relay would lose power, signal the motherboard, which would activate a macro and an uninterruptible power supply (UPS) to safely pause the print before fully shutting off.
+
+
+## Block Diagram
+![block_diagram](./Relay V1.2/block_diagram.png)
