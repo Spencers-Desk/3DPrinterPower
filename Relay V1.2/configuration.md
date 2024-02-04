@@ -1,3 +1,17 @@
+# Setup
+If you're going to be using your motherboard to signal the relay, you don't need to worry about this section. Just skip to the configuration section. If you're using a Raspberry Pi that has the Klipper host software on it, then you need to do some further configuration. The first is to enable your Pi to act as an additional MCU.
+
+## Raspberry Pi MCU
+Go to the below link and follow the instructions.
+https://github.com/Klipper3d/klipper/blob/master/docs/RPi_microcontroller.md
+After completing that, add the following to your printer.cfg file. It adds the Pi as an additional MCU.
+```
+[mcu host]
+serial: /tmp/klipper_host_mcu
+```
+The following link is a config file that shows how to use multi-MCU setups.
+https://github.com/Klipper3d/klipper/blob/master/config/sample-multi-mcu.cfg
+
 # moonraker.cfg
 Add everything below here to your moonraker.cfg file. This enables moonraker to toggle your power devices from the klipper software.
 ```
