@@ -71,7 +71,6 @@ bound_services:
 #   is "off", all bound services will be stopped after device initialization.
 #
 #   The default is no services are bound to the device.
-
 #object_name: output_pin my_pin
 #    The Klipper object_name (as defined in your Klipper config).  Valid examples:
 #      output_pin my_pin
