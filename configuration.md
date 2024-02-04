@@ -1,6 +1,6 @@
 # moonraker.cfg
 Add everything below here to your moonraker.cfg file. This enables moonraker to toggle your power devices from the klipper software.
-
+```
 ##################################################
 #     Power
 ##################################################
@@ -72,10 +72,10 @@ bound_services:
 #    shelly, and tasmota devices.  The timer may be a floating point value
 #    for gpio types, it should be an integer for all other types.  The
 #    default is no timer is set.
-
+```
 # macros.cfg or printer.cfg
 Place these in either your macros.cfg file (with an [include macros.cfg] in your printer.cfg) or just add them to your printer.cfg file. These are the macros that will call on moonraker to toggle your power device when your printer has been idle for a certain amount of time.
-
+```
 ##################################################
 #     Power Macros
 ##################################################
@@ -128,3 +128,4 @@ gcode:
 #   UPDATE_DELAYED_GCODE [ID=<name>] [DURATION=<seconds>]:
 #   Updates the delay duration for the identified [delayed_gcode] and starts the timer for gcode execution.
 #   A value of 0 will cancel a pending delayed gcode from executing.
+```
