@@ -1,7 +1,9 @@
 # 3DPrinterPower
 This repository contains directions and configuration for controlling your 3D Printer's Power devices with Klipper. I created this while creating the YouTube video below. I'll likely add updates to this in the future when I begin using more powered devices.
 
-The first powered device I setup was the BIGTREETECH Relay V1.2. This was used to power off my printer 10 minutes after a print finished (giving adequate time to cool down). It also provides a few cool safety features which are laid out in more detail later on. In the future, I plan to add more power devices for air filtration, lighting, heated chamber, etc...
+The first powered device I setup was the BIGTREETECH Relay V1.2. This was used to power off my printer 15 minutes after a print finished (giving adequate time to cool down). It also provides a few cool safety features which are laid out in more detail later on. In the future, I plan to add more power devices for air filtration, lighting, heated chamber, etc...
+
+Next I tried out a tp-link smart plug that had energy monitoring. The EP-25 model with Apple HomeKit (not that I used HomeKit). Moving forward, I'll be using the smart-plug to turn my printer on and off while using the relay to cut power in the case of short circuits.
 
 If you want to support me, checkout my YouTube channel and interact with me! Additionally, below are some Amazon links to products I used during these projects. Thanks a ton and good luck!
 
