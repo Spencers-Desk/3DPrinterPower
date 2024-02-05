@@ -2,18 +2,18 @@
 Setup for the tp-link plug is pretty straight forward. You need to drop some configuration into your moonraker.cfg file, your printer.cfg file, and your macros.cfg file if you have one.
 
 # moonraker.cfg
-Add the below to your moonraker.cfg file. Make sure to add the IP of your tp-link plug to its field.
+Add the below to your moonraker.cfg file. Make sure to change the IP address to the IP address of your tp-link.
 ```
 ##################################################
 #     Power
 ##################################################
-[power relay]
-type: gpio
+[power printer_plug]
+type: tplink_smartplug
+address: 192.168.10.132
 #   The type of device.  Can be either gpio, klipper_device, rf,
 #   tplink_smartplug, tasmota, shelly, homeseer, homeassistant, loxonev1,
 #   smartthings, mqtt or hue.
 #   This parameter must be provided.
-pin: gpiochip0/gpio23
 initial_state: on
 #    The state the power device should be initialized to.  May be on or
 #    off.  When this option is not specifed no initial state will be set.
@@ -62,21 +62,6 @@ bound_services:
 #   is "off", all bound services will be stopped after device initialization.
 #
 #   The default is no services are bound to the device.
-
-#object_name: output_pin my_pin
-#    The Klipper object_name (as defined in your Klipper config).  Valid examples:
-#      output_pin my_pin
-#      gcode_macro MY_MACRO
-#    Currently, only `output_pin` and `gcode_macro` Klipper devices are
-#    supported.  See the note below for macro restrictions. Keep in mind that
-#    the object name is case sensitive.  This parameter must be provided.
-#timer: this might be good to run a filtration device
-#    A time (in seconds) after which the device will power off after being.
-#    switched on. This effectively turns the device into a  momentary switch.
-#    This option is available for gpio, klipper_device, tplink_smartplug,
-#    shelly, and tasmota devices.  The timer may be a floating point value
-#    for gpio types, it should be an integer for all other types.  The
-#    default is no timer is set.
 ```
 
 # printer.cfg
@@ -118,7 +103,7 @@ Add the below to your macros.cfg file. If you don't have one, just add them to t
 # Description: This macro asks moonraker to toggle our "relay" state to "off"
 gcode:
   {action_call_remote_method(
-    "set_device_power", device="relay", state="off"
+    "set_device_power", device="printer_plug", state="off"
   )}
 # Comments:
 # action_call_remote_method is used to call a method registered by a remote client (moonraker)
