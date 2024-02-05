@@ -28,14 +28,14 @@ pin: gpiochip0/gpio23
 initial_state: on
 #    The state the power device should be initialized to.  May be on or
 #    off.  When this option is not specifed no initial state will be set.
-off_when_shutdown: False
+off_when_shutdown: true
 #   If set to True the device will be powered off when Klipper enters
 #   the "shutdown" state.  This option applies to all device types.
 #   The default is False.
 off_when_shutdown_delay: 0
 #   If "off_when_shutdown" is set, this option specifies the amount of time
 #   (in seconds) to wait before turning the device off. Default is 0 seconds.
-on_when_job_queued: False
+on_when_job_queued: true
 #   If set to True the device will power on if a job is queued while the
 #   device is off.  This allows for an automated "upload, power on, and
 #   print" approach directly from the slicer, see the configuration example
@@ -56,7 +56,9 @@ restart_klipper_when_powered: True
 restart_delay: 1.
 #   If "restart_klipper_when_powered" is set, this option specifies the amount
 #   of time (in seconds) to delay the restart.  Default is 1 second.
-bound_services: klipper
+bound_services:
+#  klipper
+#  klipper-mcu
 #   A newline separated list of services that are "bound" to the state of this
 #   device.  When the device is powered on all bound services will be started.
 #   When the device is powered off all bound services are stopped.
@@ -71,6 +73,7 @@ bound_services: klipper
 #   is "off", all bound services will be stopped after device initialization.
 #
 #   The default is no services are bound to the device.
+
 #object_name: output_pin my_pin
 #    The Klipper object_name (as defined in your Klipper config).  Valid examples:
 #      output_pin my_pin
@@ -86,8 +89,36 @@ bound_services: klipper
 #    for gpio types, it should be an integer for all other types.  The
 #    default is no timer is set.
 ```
-# macros.cfg or printer.cfg
-Place these in either your macros.cfg file (with an [include macros.cfg] in your printer.cfg) or just add them to your printer.cfg file. These are the macros that will call on moonraker to toggle your power device when your printer has been idle for a certain amount of time.
+
+# printer.cfg
+Add the below to your printer.cfg file. If you have a macros.cfg file, you can move the macros in there. Make sure that the idle_timeout stays in the printer.cfg file.
+```
+##################################################
+#     Idle Timeout
+##################################################
+[idle_timeout]
+# Description: This macro is called when the printer goes into an idle state and calls the previous delayed_gcode. It updates the delay to the duration defined below.
+# After 5 minutes (300seconds) of being idle, the gcode below will be called. It tells the relay to shut off after 10 minutes (600seconds).
+gcode:
+  M118 Printer has been idle for 5 minutes. Printer will shutdown in 10 minutes!
+  M84
+  TURN_OFF_HEATERS
+  UPDATE_DELAYED_GCODE ID=delayed_printer_off DURATION=600 ; This is how long the relay will switch after the printer has gone idle
+timeout: 300 ; This is how long it will take for the printer to go idle
+# i.e. total time to shutoff is DURATION+timeout
+
+# Comments:
+# "idle_timeout" is a module that tracks the "state" of the printer. The "state" can be "Idle", "Printing", or "Ready"
+# "M84" turns off the stepper motors
+# "TURN_OFF_HEATERS" turns of the heaters
+# "UPDATE_DELAYED_GCODE"
+#   UPDATE_DELAYED_GCODE [ID=<name>] [DURATION=<seconds>]:
+#   Updates the delay duration for the identified [delayed_gcode] and starts the timer for gcode execution.
+#   A value of 0 will cancel a pending delayed gcode from executing.
+```
+
+# macros.cfg
+Add the below to your macros.cfg file. If you don't have one, just add them to the printer.cfg but make sure that they are before the Idle Timeout section.
 ```
 ##################################################
 #     Power Macros
@@ -124,21 +155,4 @@ gcode:
 #   If set to 0 the delayed_gcode will not execute on startup.
 #   Default is 0.
 # "POWER_OFF_PRINTER" calls the "POWER_OFF_PRINTER" macro defined above
-
-
-[idle_timeout]
-# Description: This macro is called when the printer goes into an idle state and calls the previous delayed_gcode. It updates the delay to the duration defined below.
-# After 10 minutes (600seconds) of being idle, the gcode below will be called.
-gcode:
-  M84
-  TURN_OFF_HEATERS
-  UPDATE_DELAYED_GCODE ID=delayed_printer_off DURATION=600
-# Comments:
-# "idle_timeout" is a module that tracks the "state" of the printer. The "state" can be "Idle", "Printing", or "Ready"
-# "M84" turns off the stepper motors
-# "TURN_OFF_HEATERS" turns of the heaters
-# "UPDATE_DELAYED_GCODE"
-#   UPDATE_DELAYED_GCODE [ID=<name>] [DURATION=<seconds>]:
-#   Updates the delay duration for the identified [delayed_gcode] and starts the timer for gcode execution.
-#   A value of 0 will cancel a pending delayed gcode from executing.
 ```
